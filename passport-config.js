@@ -1,4 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy
+const bcrypt = require('bcrypt');
 
 function initialize(passport, getUser) {
     const authUser = async (username, password, done) => {
@@ -7,7 +8,9 @@ function initialize(passport, getUser) {
             return done(null, false, {message: "User not exist"})
         }
         try{
-            if(await password === user.password){
+            console.log(password);
+            console.log(user.password);
+            if( password===user.password){
                 return done(null, user)
             }
             else{

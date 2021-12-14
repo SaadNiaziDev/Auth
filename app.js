@@ -19,15 +19,16 @@ const users = [
     }
 ];
 
-const initializePassport = require('./passport-config');
-initializePassport(passport,username=>{
-    return users.find(user=>user.username===username)
-});
+const initializePassport = require('./passport-config')
+initializePassport(
+  passport,
+  username => users.find(user => user.username === username)
+)
 
 
 app.use(flash());
 app.use(session({
-    secret: 'ABCDEF',
+    secret: 'secret',
     resave: false,
     saveUninitialized: false,
 }));
@@ -35,42 +36,36 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/login', (req, res)=>{
-    res.sendFile(path.join(__dirname+'/login.html'))
+    res.send("Wrong Input")
 })
 
 
 app.get('/home', (req, res)=>{
-    res.sendFile(path.join(__dirname+'/test.html'));
+    res.send("Logged In")
 })
 
 app.post('/', passport.authenticate('local',{
     successRedirect :'/home',
-    successFlash: true,
-    failureRedirect:'login',
+    failureRedirect :'login',
     failureFlash: true, 
 }));
 
-// app.get('/login', (req, res) => {
-//     res.json(users);
-// })
 
-// app.post('/login', async (req, res)=> {
-//     const user = req.body.username;
-//     const email = req.body.email;
-//     try{
-//     const hashPassword = await bcrypt.hash(req.body.password,1024);
-//     users.push({ 
-//         id:Date.now().toString(),
-//         name: user,
-//         password: hashPassword,
-//         email: email,
-//     })
-//     console.log(users);
-//     res.send('record added!');
+
+app.post('/register',  (req, res)=> {
+    const user = req.body.username;
+    try{
+    const hashPassword = req.body.password;
+    users.push({ 
+        name: user,
+        password: hashPassword,
+    })
+    //console.log(users);
+    res.send('record added!');
     
-// }catch{
-//     res.sendStatus(404);
-// }
-// });
+}catch{
+    res.sendStatus(404);
+}
+});
 
 app.listen(3000);
