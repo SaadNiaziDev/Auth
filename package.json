@@ -1,8 +1,9 @@
 {
   "name": "auth",
   "version": "1.0.0",
+  "type": "commonjs",
   "description": "authenticating and authourization",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/SaadNiaziDev/Auth/issues"
   },
-  "homepage": "https://github.com/SaadNiaziDev/Auth#readme"
+  "homepage": "https://github.com/SaadNiaziDev/Auth#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1"
+  }
 }
